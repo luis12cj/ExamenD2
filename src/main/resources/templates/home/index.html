@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard | Librería</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/chart.js/Chart.css}">
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a th:href="@{/dashboard}" class="nav-link">Inicio</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown user-menu">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <img th:src="@{/dist/img/user2-160x160.jpg}" class="user-image img-circle elevation-2" alt="User Image">
+                    <span class="d-none d-md-inline" th:text="${session.usuarioLogueado.nombre}">Usuario</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <li class="user-header bg-info">
+                        <img th:src="@{/dist/img/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image">
+                        <p th:text="${session.usuarioLogueado.nombre}">Usuario</p>
+                    </li>
+                    <li class="user-footer">
+                        <a th:href="@{/auth/logout}" class="btn btn-default btn-flat float-right text-danger">
+                            <i class="fas fa-power-off"></i> Cerrar Sesión
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <aside class="main-sidebar sidebar-dark-info elevation-4">
+        <a th:href="@{/dashboard}" class="brand-link text-center">
+            <span class="brand-text font-weight-light"><b>Librería</b> UPIIZ</span>
+        </a>
+
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard}" class="nav-link active"><i class="nav-icon fas fa-home"></i> <p>Inicio</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/libros}" class="nav-link"><i class="nav-icon fas fa-book"></i> <p>Productos</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/ventas}" class="nav-link"><i class="nav-icon fas fa-shopping-cart"></i> <p>Ventas</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/facturacion}" class="nav-link"><i class="nav-icon fas fa-file-invoice"></i> <p>Facturación</p></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2"><div class="col-sm-6"><h1 class="m-0">Panel de Control</h1></div></div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-info">
+                            <div class="inner"><h3 th:text="${totalVentas}">0</h3><p>Órdenes de compra</p></div>
+                            <div class="icon"><i class="fas fa-shopping-bag"></i></div>
+                            <a th:href="@{/ventas}" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-success">
+                            <div class="inner"><h3>53<sup style="font-size: 20px">%</sup></h3><p>Ventas</p></div>
+                            <div class="icon"><i class="fas fa-chart-bar"></i></div>
+                            <a th:href="@{/ventas}" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-warning">
+                            <div class="inner"><h3 th:text="${totalLibros}">0</h3><p>Productos</p></div>
+                            <div class="icon"><i class="fas fa-box"></i></div>
+                            <a th:href="@{/libros}" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-danger">
+                            <div class="inner"><h3 th:text="${totalUsuarios}">0</h3><p>Usuarios registrados</p></div>
+                            <div class="icon"><i class="fas fa-user-plus"></i></div>
+                            <a th:href="@{/dashboard}" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-info card-outline">
+                            <div class="card-header"><h3 class="card-title"><i class="fas fa-chart-area mr-1"></i> Ventas por mes</h3></div>
+                            <div class="card-body">
+                                <canvas id="ventasChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="main-footer"><strong>Librería Luis Eduardo &copy; 2026</strong></footer>
+</div>
+
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/plugins/chart.js/Chart.bundle.js}"></script>
+<script th:src="@{/plugins/chart.js/Chart.js}"></script>
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function () {
+        var ctx = document.getElementById('ventasChart').getContext('2d');
+
+        // Validamos datos reales de Java o usamos ceros si es null
+        var datosDesdeJava =  [0,0,0,0,0,0,0];
+
+        // Aseguramos que sea un objeto Array
+        if (typeof datosDesdeJava === 'string') {
+            datosDesdeJava = JSON.parse(datosDesdeJava);
+        }
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'Ventas Realizadas',
+                    data: datosDesdeJava,
+                    backgroundColor: 'rgba(23, 162, 184, 0.1)',
+                    borderColor: '#17a2b8',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#17a2b8'
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: { beginAtZero: true, suggestedMax: 10 }
+                    }]
+                }
+            }
+        });
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Librería | Registro de Personal</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+</head>
+<body class="hold-transition register-page" style="background-color: #f4f6f9;">
+<div class="register-box">
+    <div class="register-logo">
+        <a th:href="@{/static}"><b class="text-info">Gestión</b> Librería</a>
+    </div>
+
+    <div class="card card-outline card-info">
+        <div class="card-body register-card-body">
+            <p class="login-box-msg">Registrar nuevo miembro de la librería</p>
+
+            <form th:action="@{/auth/register}" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" name="nombre" class="form-control" placeholder="Nombre completo" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user text-info"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Correo electrónico" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope text-info"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock text-info"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" placeholder="Confirmar contraseña" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock text-info"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="icheck-info">
+                            <input type="checkbox" id="agreeTerms" name="terms" value="agree" required>
+                            <label for="agreeTerms">
+                                Acepto los <a href="#" class="text-info">términos</a>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-info btn-block">Registrar</button>
+                    </div>
+                </div>
+            </form>
+
+            <a th:href="@{/auth/login}" class="text-center text-info mt-3 d-block">Ya tengo una cuenta</a>
+        </div>
+        <div  th:if="${error}" class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="icon fas fa-exclamation-triangle"></i>
+        <span th:text="${error}"></span>
+    </div>
+    </div>
+</div>
+
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+</body>
+</html>

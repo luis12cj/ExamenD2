@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Facturación | Librería</title>
+  <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+  <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <div class="content-wrapper" style="margin-left: 0;">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6"><h1>Facturación</h1></div>
+          <div class="col-sm-6 text-right">
+            <a th:href="@{/dashboard}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Volver al Dashboard</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="card card-warning card-outline">
+        <div class="card-header"><h3 class="card-title">Ventas para Facturar</h3></div>
+        <div class="card-body p-0">
+          <table class="table table-striped text-center">
+            <thead>
+            <tr>
+              <th>Id</th>
+              <th>Cliente</th>
+              <th>Cantidad</th>
+              <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="f : ${facturas}">
+              <td th:text="${f.id}"></td>
+              <td th:text="${f.cliente}"></td>
+              <td th:text="${f.cantidad}"></td>
+              <td>
+                <a th:href="@{/facturacion/generar/{id}(id=${f.id})}" class="btn btn-warning">
+                  Generar Factura <i class="fas fa-file-invoice"></i>
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

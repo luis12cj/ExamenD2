@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Nueva Venta | Librería</title>
+  <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+  <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <div class="content-wrapper" style="margin-left: 0;">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6"><h1>Registrar Venta</h1></div>
+          <div class="col-sm-6 text-right">
+            <a th:href="@{/dashboard}" class="btn btn-secondary">
+              <i class="fas fa-arrow-left"></i> Volver al Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="card card-primary">
+          <div class="card-header"><h3 class="card-title">Datos de la transacción</h3></div>
+
+          <form th:action="@{/ventas/guardar}" th:object="${venta}" method="post">
+            <div class="card-body">
+              <div class="form-group">
+                <label>ID del Libro</label>
+                <input type="number" th:field="*{libroId}" class="form-control" placeholder="Ingrese el ID del libro" required>
+              </div>
+              <div class="form-group">
+                <label>Nombre del Cliente</label>
+                <input type="text" th:field="*{cliente}" class="form-control" placeholder="Nombre completo" required>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <label>Cantidad</label>
+                  <input type="number" th:field="*{cantidad}" class="form-control" min="1" required>
+                </div>
+                <div class="col-6">
+                  <label>Fecha</label>
+                  <input type="date" th:field="*{fecha}" class="form-control" required>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer text-right">
+              <a th:href="@{/ventas}" class="btn btn-default">Cancelar</a>
+              <button type="submit" class="btn btn-primary ml-2">Guardar Registro</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

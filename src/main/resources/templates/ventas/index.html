@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Ventas | Librería</title>
+  <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+  <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <div class="content-wrapper" style="margin-left: 0;">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6"><h1>Gestión de Ventas</h1></div>
+          <div class="col-sm-6 text-right">
+            <a th:href="@{/dashboard}" class="btn btn-secondary mr-2">
+              <i class="fas fa-arrow-left"></i> Volver al Dashboard
+            </a>
+            <a th:href="@{/ventas/nuevo}" class="btn btn-primary">
+              <i class="fas fa-cart-plus"></i> Registrar Nueva Venta
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="card card-success card-outline">
+        <div class="card-header"><h3 class="card-title">Historial de Transacciones</h3></div>
+        <div class="card-body p-0">
+          <table class="table table-striped text-center">
+            <thead>
+            <tr>
+              <th>Folio</th>
+              <th>ID Libro</th>
+              <th>Cliente</th>
+              <th>Cantidad</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="venta : ${ventas}">
+              <td th:text="${venta.id}"></td>
+              <td th:text="${venta.libroId}"></td>
+              <td th:text="${venta.cliente}"></td>
+              <td th:text="${venta.cantidad}"></td>
+              <td th:text="${venta.fecha}"></td>
+              <td>
+                <a th:href="@{/ventas/eliminar/{id}(id=${venta.id})}" class="btn btn-danger btn-sm">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(ventas)}">
+              <td colspan="6" class="text-muted">No se han registrado ventas aún.</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

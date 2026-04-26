@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Librería | Iniciar Sesión</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+</head>
+<body class="hold-transition login-page" style="background-color: #f4f6f9;">
+<div class="login-box">
+    <div class="login-logo">
+        <a th:href="@{/static}"><b class="text-info">Gestión</b> Librería</a>
+    </div>
+
+    <div class="card card-outline card-info">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">Inicia sesión para administrar la librería</p>
+
+            <form th:action="@{/auth/login}" method="post">
+                <div class="input-group mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Correo electrónico" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope text-info"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock text-info"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${error}" class="alert alert-danger p-2 text-center text-sm">
+                    <span th:text="${error}"></span>
+                </div>
+                <div th:if="${param.exito}" class="alert alert-success p-2 text-center text-sm">
+                    ¡Registro exitoso! Inicia sesión.
+                </div>
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="icheck-info">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">
+                                Recordarme
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-info btn-block">Ingresar</button>
+                    </div>
+                </div>
+            </form>
+
+            <p class="mb-1 mt-3">
+                <a th:href="@{/auth/forgot-password}" class="text-center text-info">Olvidé mi contraseña</a>
+            </p>
+            <p class="mb-0">
+                <a th:href="@{/auth/register}" class="text-center text-info">Registrar nuevo usuario</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+</body>
+</html>
